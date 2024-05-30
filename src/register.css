@@ -1,0 +1,157 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+*,
+*::before,
+*::after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+
+.body {
+  scroll-behavior: smooth;
+  line-height: 1.1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+.__main_container {
+  width: auto;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.__main_container h1 {
+  text-align: center;
+}
+
+.__container {
+  padding: 2rem 0;
+}
+
+.__education_info,
+.__account_info,
+.__family_info,
+.__personal_info {
+  padding: 0.25rem 0;
+}
+
+.__personal_container,
+.__education_container {
+  padding-top: 0.25rem;
+  padding-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4rem;
+}
+.__account_container {
+  padding-top: 0.25rem;
+  padding-bottom: 2rem;
+  display: flex;
+}
+
+.__family_container {
+  padding-top: 0.25rem;
+  padding-bottom: 2rem;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: auto auto;
+
+}
+
+.__family_container .item-3 {
+  grid-column: span 2;
+}
+
+.__account_container .__input-field {
+  width: 80%;
+}
+
+.__personal_container .__input-field,
+.__education_container .__input-field,
+.__family_container .__input-field,
+.__account_container .__input-field {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.form-group label {
+  flex-basis: 30%;
+  min-width: 30%;
+}
+
+.form-group input {
+  flex-basis: 70%;
+  width: 70%;
+  border-radius: 0.5rem;
+}
+
+.__family_container .__input-field .form-group .__hm_label {
+  flex-basis: 70%;
+  min-width: 70%;
+}
+
+.__family_container .item-3 .form-group label {
+  flex-basis: 60%;
+  min-width: 60%;
+}
+
+.__family_container .item-3 .form-group input,
+.__family_container .__input-field .form-group .__hm_input {
+  flex-basis: 30%;
+  width: 30%;
+  border-radius: 0.5rem;
+}
+
+.__account_container .__input-field .form-group label {
+  flex-basis: 20%;
+  min-width: 20%;
+}
+
+.__account_container .__input-field .form-group input {
+  flex-basis: 40%;
+  width: 40%;
+  border-radius: 0.5rem;
+}
+
+.__button_field {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 15rem;
+}
+
+.__button_field .register {
+  background-color: #055222;
+  width: 10rem;
+  padding: 0.75rem 2.5rem;
+  border-radius: 1rem;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  margin-right: 1rem;
+}
+.__button_field .cancel {
+  background-color: #dd0b1c;
+  width: 10rem;
+  padding: 0.75rem 2.5rem;
+  border-radius: 1rem;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  text-align: center;
+  margin-right: 1rem;
+}

@@ -8,7 +8,7 @@ export default function Home() {
       <div className="hero-page">
         <div className="title">
           <h1>
-            Scholarship Application <span> System </span>
+            Scholarship Services <span> System </span>
           </h1>
         </div>
         <div>
