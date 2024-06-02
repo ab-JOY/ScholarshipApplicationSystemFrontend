@@ -5,16 +5,16 @@ const HideNav = ({children}) => {
 
     const location = useLocation();
 
-    const pathnames = ["/login", "/register", "/admin", "/user"]; 
+    const pathnames = ["/", "/programs", "about", "/home"]; 
 
     const[showNavBar, setShowNavBar] = useState(false)
 
     useEffect(()=> {
         console.log("this is location", location)
         if(pathnames.includes(location.pathname)){
-            setShowNavBar(false)
-        } else{
             setShowNavBar(true)
+        } else{
+            setShowNavBar(false)
         }
     }, [location])
 

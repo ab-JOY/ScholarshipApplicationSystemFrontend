@@ -24,9 +24,10 @@ export default function NavBar() {
             <Nav.Link as={Link} to="/#home" smooth>Home</Nav.Link>
             <Nav.Link as={Link} to="/#about" smooth>About</Nav.Link>
             <Nav.Link as={Link} to="/#programs" smooth>Programs</Nav.Link>
+            <Link className="button-login btn btn-outline-primary" to="/login">Admin</Link>
           </Nav>
           <Form className="d-flex ms-3">
-            <Button variant="outline-success">Apply Now!</Button>
+            <Button href="/register" variant="outline-success">Apply Now!</Button>
           </Form>
         </Navbar.Collapse>
       </Container>

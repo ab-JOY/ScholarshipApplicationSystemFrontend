@@ -1,46 +1,77 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-export default function Register() {
+export default function EditScholar() {
   let navigate = useNavigate();
 
-  const [pendingScholar, setPendingScholar] = useState({
-    fullName_pending: "",
-    age_pending: "",
-    dateOfBirth_pending: "",
-    municipality_pending: "",
-    detailedAddress_pending: "",
-    school_pending: "",
-    gwa_pending: "",
-    course_pending: "",
-    yearLevel_pending: "",
-    contactNumber_pending: "",
-    emailAddress_pending: "",
-    emergencyContactPerson_pending: "",
-    relationshipWithEmergencyContact_pending: "",
-    nameOfMother_pending: "",
-    occupationOfMother_pending: "",
-    nameOfFather_pending: "",
-    occupationOfFather_pending: "",
-    numberOfSiblings_pending: "",
-    numberOfSiblingsStudying_pending: "",
-    numberOfSiblingsWorking_pending: "",
-    annualHouseholdIncome_pending: "",
-    userName_pending: "",
-    password_pending: ""
+  const [Scholar, setScholar] = useState({
+    fullName: "",
+    age: "",
+    dateOfBirth: "",
+    municipality: "",
+    detailedAddress: "",
+    school: "",
+    gwa: "",
+    course: "",
+    yearLevel: "",
+    contactNumber: "",
+    emailAddress: "",
+    emergencyContactPerson: "",
+    relationshipWithEmergencyContact: "",
+    nameOfMother: "",
+    occupationOfMother: "",
+    nameOfFather: "",
+    occupationOfFather: "",
+    numberOfSiblings: "",
+    numberOfSiblingsStudying: "",
+    numberOfSiblingsWorking: "",
+    annualHouseholdIncome: ""
   });
 
+  const {fullName,
+    age,
+    dateOfBirth,
+    municipality,
+    detailedAddress,
+    school,
+    gwa,
+    course,
+    yearLevel,
+    contactNumber,
+    emailAddress,
+    emergencyContactPerson,
+    relationshipWithEmergencyContact,
+    nameOfMother,
+    occupationOfMother,
+    nameOfFather,
+    occupationOfFather,
+    numberOfSiblings,
+    numberOfSiblingsStudying,
+    numberOfSiblingsWorking,
+    annualHouseholdIncome} = Scholar
+
   const onInputChange = (e) => {
-    setPendingScholar({ ...pendingScholar, [e.target.name]: e.target.value });
+    setScholar({ ...Scholar, [e.target.name]: e.target.value });
   };
+
+  const {scholarId} = useParams();
+
+  useEffect(()=>{
+    loadScholar();
+}, []);
 
   const onSubmit = async (e) => {
     alert("You are about to submit");
     e.preventDefault();
-    await axios.post(`http://localhost:8080/pendingApplication`, pendingScholar);
-    navigate("/");
+    await axios.put(`http://localhost:8080/scholar/${scholarId}`, Scholar);
+    navigate("/manageScholar");
   };
+
+  const loadScholar=async ()=>{
+    const result=await axios.get(`http://localhost:8080/scholar/${scholarId}`)
+    setScholar(result.data)
+};
 
   return (
     <div className="container align-items-center justify-content-between">
@@ -54,83 +85,83 @@ export default function Register() {
             <div className="__personal_container">
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="fullName_pending">Name :</label>
+                  <label htmlFor="fullName">Name :</label>
                   <input
                     required
                     type="text"
-                    name="fullName_pending"
-                    id="fullName_pending"
+                    name="fullName"
+                    id="fullName"
                     className="form-control"
                     placeholder="Name"
-                    value={pendingScholar.fullName_pending}
+                    value={fullName}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="dateOfBirth_pending">Birth Date :</label>
+                  <label htmlFor="dateOfBirth">Birth Date :</label>
                   <input
                     required
                     type="date"
-                    name="dateOfBirth_pending"
-                    id="dateOfBirth_pending"
+                    name="dateOfBirth"
+                    id="dateOfBirth"
                     className="form-control"
                     placeholder="Date of Birth"
-                    value={pendingScholar.dateOfBirth_pending}
+                    value={dateOfBirth}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="detailedAddress_pending">Detailed Address :</label>
+                  <label htmlFor="detailedAddress">Detailed Address :</label>
                   <input
                     required
                     type="text"
-                    name="detailedAddress_pending"
-                    id="detailedAddress_pending"
+                    name="detailedAddress"
+                    id="detailedAddress"
                     className="form-control"
                     placeholder="Detailed Address"
-                    value={pendingScholar.detailedAddress_pending}
+                    value={detailedAddress}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="emergencyContactPerson_pending">Emergency Contact Person:</label>
+                  <label htmlFor="emergencyContactPerson">Emergency Contact Person:</label>
                   <input
                     required
                     type="text"
-                    name="emergencyContactPerson_pending"
-                    id="emergencyContactPerson_pending"
+                    name="emergencyContactPerson"
+                    id="emergencyContactPerson"
                     className="form-control"
                     placeholder="Emergency Contact"
-                    value={pendingScholar.emergencyContactPerson_pending}
+                    value={emergencyContactPerson}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
               </div>
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="age_pending">Age :</label>
+                  <label htmlFor="age">Age :</label>
                   <input
                     required
                     type="number"
-                    name="age_pending"
-                    id="age_pending"
+                    name="age"
+                    id="age"
                     className="form-control"
                     min="15"
                     placeholder="Age"
-                    value={pendingScholar.age_pending}
+                    value={age}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="municipality_pending">Municipality :</label>
+                  <label htmlFor="municipality">Municipality :</label>
                   <select
                     required
-                    name="municipality_pending"
-                    id="municipality_pending"
+                    name="municipality"
+                    id="municipality"
                     className="form-control form-input select"
                     aria-label="Municipality"
                     placeholder="Municipality"
-                    value={pendingScholar.municipality_pending}
+                    value={municipality}
                     onChange={(e) => onInputChange(e)}
                   >
                     <option value="" disabled>
@@ -153,41 +184,41 @@ export default function Register() {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="contactNumber_pending">Contact Number :</label>
+                  <label htmlFor="contactNumber">Contact Number :</label>
                   <input
                     required
                     type="text"
-                    name="contactNumber_pending"
-                    id="contactNumber_pending"
+                    name="contactNumber"
+                    id="contactNumber"
                     className="form-control"
                     placeholder="Contact Number"
-                    value={pendingScholar.contactNumber_pending}
+                    value={contactNumber}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="relationshipWithEmergencyContact_pending">Emergecy Contact Number:  :</label>
+                  <label htmlFor="relationshipWithEmergencyContact">Emergecy Contact Number:  :</label>
                   <input
                     required
                     type="text"
-                    name="relationshipWithEmergencyContact_pending"
-                    id="relationshipWithEmergencyContact_pending"
+                    name="relationshipWithEmergencyContact"
+                    id="relationshipWithEmergencyContact"
                     className="form-control"
                     placeholder="Emergecy Contact Number"
-                    value={pendingScholar.relationshipWithEmergencyContact_pending}
+                    value={relationshipWithEmergencyContact}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="emailAddress_pending">Email Address :</label>
+                  <label htmlFor="emailAddress">Email Address :</label>
                   <input
                     required
                     type="email"
-                    name="emailAddress_pending"
-                    id="emailAddress_pending"
+                    name="emailAddress"
+                    id="emailAddress"
                     className="form-control"
                     placeholder="Email"
-                    value={pendingScholar.emailAddress_pending}
+                    value={emailAddress}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
@@ -200,56 +231,56 @@ export default function Register() {
             <div className="__education_container">
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="school_pending">School :</label>
+                  <label htmlFor="school">School :</label>
                   <input
                     required
                     type="text"
-                    name="school_pending"
-                    id="school_pending"
+                    name="school"
+                    id="school"
                     className="form-control"
                     placeholder="School"
-                    value={pendingScholar.school_pending}
+                    value={school}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="course_pending">Course :</label>
+                  <label htmlFor="course">Course :</label>
                   <input
                     required
                     type="text"
-                    name="course_pending"
-                    id="course_pending"
+                    name="course"
+                    id="course"
                     className="form-control"
                     placeholder="Course"
-                    value={pendingScholar.course_pending}
+                    value={course}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
               </div>
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="yearLevel_pending">Year Level :</label>
+                  <label htmlFor="yearLevel">Year Level :</label>
                   <input
                     required
                     type="text"
-                    name="yearLevel_pending"
-                    id="yearLevel_pending"
+                    name="yearLevel"
+                    id="yearLevel"
                     className="form-control"
                     placeholder="Year Level"
-                    value={pendingScholar.yearLevel_pending}
+                    value={yearLevel}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="gwa_pending">GWA :</label>
+                  <label htmlFor="gwa">GWA :</label>
                   <input
                     required
                     type="text"
-                    name="gwa_pending"
-                    id="gwa_pending"
+                    name="gwa"
+                    id="gwa"
                     className="form-control"
                     placeholder="General Weighted Average"
-                    value={pendingScholar.gwa_pending}
+                    value={gwa}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
@@ -262,112 +293,112 @@ export default function Register() {
             <div className="__family_container">
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="nameOfFather_pending">Father's Name :</label>
+                  <label htmlFor="nameOfFather">Father's Name :</label>
                   <input
                     required
                     type="text"
-                    name="nameOfFather_pending"
-                    id="nameOfFather_pending"
+                    name="nameOfFather"
+                    id="nameOfFather"
                     className="form-control"
                     placeholder="Father's Name"
-                    value={pendingScholar.nameOfFather_pending}
+                    value={nameOfFather}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="nameOfMother_pending">Mother's Name :</label>
+                  <label htmlFor="nameOfMother">Mother's Name :</label>
                   <input
                     required
                     type="text"
-                    name="nameOfMother_pending"
-                    id="nameOfMother_pending"
+                    name="nameOfMother"
+                    id="nameOfMother"
                     className="form-control"
                     placeholder="Mother's Name"
-                    value={pendingScholar.nameOfMother_pending}
+                    value={nameOfMother}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="numberOfSiblings_pending" className="__hm_label">Number of Household Members :</label>
+                  <label htmlFor="numberOfSiblings" className="__hm_label">Number of Household Members :</label>
                   <input
                     required
                     type="number"
-                    name="numberOfSiblings_pending"
-                    id="numberOfSiblings_pending"
+                    name="numberOfSiblings"
+                    id="numberOfSiblings"
                     className="form-control __hm_input"
                     min="0"
                     placeholder="Number of Household Members"
-                    value={pendingScholar.numberOfSiblings_pending}
+                    value={numberOfSiblings}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
               </div>
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="occupationOfFather_pending">Father's Occupation :</label>
+                  <label htmlFor="occupationOfFather">Father's Occupation :</label>
                   <input
                     required
                     type="text"
-                    name="occupationOfFather_pending"
-                    id="occupationOfFather_pending"
+                    name="occupationOfFather"
+                    id="occupationOfFather"
                     className="form-control"
                     placeholder="Father's Occupation"
-                    value={pendingScholar.occupationOfFather_pending}
+                    value={occupationOfFather}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="occupationOfMother_pending">Mother's Occupation :</label>
+                  <label htmlFor="occupationOfMother">Mother's Occupation :</label>
                   <input
                     required
                     type="text"
-                    name="occupationOfMother_pending"
-                    id="occupationOfMother_pending"
+                    name="occupationOfMother"
+                    id="occupationOfMother"
                     className="form-control"
                     placeholder="Mother's Occupation"
-                    value={pendingScholar.occupationOfMother_pending}
+                    value={occupationOfMother}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
               </div>
               <div className="__input-field item-3">
                 <div className="form-group">
-                  <label htmlFor="numberOfSiblingsStudying_pending">Number of Household Members that are Studying :</label>
+                  <label htmlFor="numberOfSiblingsStudying">Number of Household Members that are Studying :</label>
                   <input
                     required
                     type="number"
-                    name="numberOfSiblingsStudying_pending"
-                    id="numberOfSiblingsStudying_pending"
+                    name="numberOfSiblingsStudying"
+                    id="numberOfSiblingsStudying"
                     className="form-control"
                     min="0"
-                    value={pendingScholar.numberOfSiblingsStudying_pending}
+                    value={numberOfSiblingsStudying}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="numberOfSiblingsWorking_pending">Number of Household Members that are Working :</label>
+                  <label htmlFor="numberOfSiblingsWorking">Number of Household Members that are Working :</label>
                   <input
                     required
                     type="number"
-                    name="numberOfSiblingsWorking_pending"
-                    id="numberOfSiblingsWorking_pending"
+                    name="numberOfSiblingsWorking"
+                    id="numberOfSiblingsWorking"
                     className="form-control"
                     min="0"
-                    value={pendingScholar.numberOfSiblingsWorking_pending}
+                    value={numberOfSiblingsWorking}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="annualHouseholdIncome_pending">Annual Household Income (Net) :</label>
+                  <label htmlFor="annualHouseholdIncome">Annual Household Income (Net) :</label>
                   <input
                     required
                     type="number"
-                    name="annualHouseholdIncome_pending"
-                    id="annualHouseholdIncome_pending"
+                    name="annualHouseholdIncome"
+                    id="annualHouseholdIncome"
                     className="form-control"
                     min="0"
                     placeholder="Annual Income"
-                    value={pendingScholar.annualHouseholdIncome_pending}
+                    value={annualHouseholdIncome}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
@@ -376,8 +407,8 @@ export default function Register() {
           </div>
           <hr/>
           <div className="__button_field">
-            <button type="submit" className="btn btn-success register">Register</button>
-            <Link type="button" className="btn btn-danger mx-2 cancel" to="/">Cancel</Link>
+            <button type="submit" className="btn btn-success register">Save</button>
+            <Link type="button" className="btn btn-danger mx-2 cancel" to="/manageScholar">Cancel</Link>
           </div>
         </form>
       </div>

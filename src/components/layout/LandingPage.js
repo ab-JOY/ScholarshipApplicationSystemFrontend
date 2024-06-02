@@ -6,15 +6,15 @@ const LandingPage = ({ children }) => {
 
     const [showLandingPage, setLandingPage] = useState(false)
 
-    const pathnames = ["/login", "/register", "/admin", "/user"];
+    const pathnames = ["/", "/programs", "about", "/home"];
 
     useEffect(() => {
         console.log("this is location", location);
 
         if (pathnames.includes(location.pathname)) {
-            setLandingPage(false);
-        } else {
             setLandingPage(true);
+        } else {
+            setLandingPage(false);
         }
     }, [location]);
 

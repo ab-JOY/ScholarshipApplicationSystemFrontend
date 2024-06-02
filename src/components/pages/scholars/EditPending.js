@@ -1,9 +1,11 @@
 import axios from 'axios';
-import React, { useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 
-export default function Register() {
+export default function EditPending() {
   let navigate = useNavigate();
+
+  const {pendingId} = useParams();
 
   const [pendingScholar, setPendingScholar] = useState({
     fullName_pending: "",
@@ -26,21 +28,56 @@ export default function Register() {
     numberOfSiblings_pending: "",
     numberOfSiblingsStudying_pending: "",
     numberOfSiblingsWorking_pending: "",
-    annualHouseholdIncome_pending: "",
-    userName_pending: "",
-    password_pending: ""
+    annualHouseholdIncome_pending: ""
   });
+
+  const {fullName_pending,
+    age_pending,
+    dateOfBirth_pending,
+    municipality_pending,
+    detailedAddress_pending,
+    school_pending,
+    gwa_pending,
+    course_pending,
+    yearLevel_pending,
+    contactNumber_pending,
+    emailAddress_pending,
+    emergencyContactPerson_pending,
+    relationshipWithEmergencyContact_pending,
+    nameOfMother_pending,
+    occupationOfMother_pending,
+    nameOfFather_pending,
+    occupationOfFather_pending,
+    numberOfSiblings_pending,
+    numberOfSiblingsStudying_pending,
+    numberOfSiblingsWorking_pending,
+    annualHouseholdIncome_pending} = pendingScholar
 
   const onInputChange = (e) => {
     setPendingScholar({ ...pendingScholar, [e.target.name]: e.target.value });
   };
 
-  const onSubmit = async (e) => {
+
+  useEffect(()=>{
+    loadPendingScholar();
+}, []);
+
+const onSubmit = async (e) => {
     alert("You are about to submit");
     e.preventDefault();
-    await axios.post(`http://localhost:8080/pendingApplication`, pendingScholar);
-    navigate("/");
+    await axios.put(`http://localhost:8080/pendingApplication/${pendingId}`, pendingScholar);
+    navigate("/admin");
   };
+
+
+  const loadPendingScholar = async ()=>{
+    try{
+      const pending  = await axios.get(`http://localhost:8080/pendingApplication/${pendingId}`)
+    setPendingScholar(pending.data)
+    }catch (error) {
+      console.error("Error fetching data:", error);
+  }
+};
 
   return (
     <div className="container align-items-center justify-content-between">
@@ -54,7 +91,7 @@ export default function Register() {
             <div className="__personal_container">
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="fullName_pending">Name :</label>
+                  <label htmlFor="fullName">Name :</label>
                   <input
                     required
                     type="text"
@@ -62,12 +99,12 @@ export default function Register() {
                     id="fullName_pending"
                     className="form-control"
                     placeholder="Name"
-                    value={pendingScholar.fullName_pending}
+                    value={fullName_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="dateOfBirth_pending">Birth Date :</label>
+                  <label htmlFor="dateOfBirth">Birth Date :</label>
                   <input
                     required
                     type="date"
@@ -75,12 +112,12 @@ export default function Register() {
                     id="dateOfBirth_pending"
                     className="form-control"
                     placeholder="Date of Birth"
-                    value={pendingScholar.dateOfBirth_pending}
+                    value={dateOfBirth_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="detailedAddress_pending">Detailed Address :</label>
+                  <label htmlFor="detailedAddress">Detailed Address :</label>
                   <input
                     required
                     type="text"
@@ -88,12 +125,12 @@ export default function Register() {
                     id="detailedAddress_pending"
                     className="form-control"
                     placeholder="Detailed Address"
-                    value={pendingScholar.detailedAddress_pending}
+                    value={detailedAddress_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="emergencyContactPerson_pending">Emergency Contact Person:</label>
+                  <label htmlFor="emergencyContactPerson">Emergency Contact Person:</label>
                   <input
                     required
                     type="text"
@@ -101,14 +138,14 @@ export default function Register() {
                     id="emergencyContactPerson_pending"
                     className="form-control"
                     placeholder="Emergency Contact"
-                    value={pendingScholar.emergencyContactPerson_pending}
+                    value={emergencyContactPerson_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
               </div>
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="age_pending">Age :</label>
+                  <label htmlFor="age">Age :</label>
                   <input
                     required
                     type="number"
@@ -117,12 +154,12 @@ export default function Register() {
                     className="form-control"
                     min="15"
                     placeholder="Age"
-                    value={pendingScholar.age_pending}
+                    value={age_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="municipality_pending">Municipality :</label>
+                  <label htmlFor="municipality">Municipality :</label>
                   <select
                     required
                     name="municipality_pending"
@@ -130,7 +167,7 @@ export default function Register() {
                     className="form-control form-input select"
                     aria-label="Municipality"
                     placeholder="Municipality"
-                    value={pendingScholar.municipality_pending}
+                    value={municipality_pending}
                     onChange={(e) => onInputChange(e)}
                   >
                     <option value="" disabled>
@@ -153,7 +190,7 @@ export default function Register() {
                   </select>
                 </div>
                 <div className="form-group">
-                  <label htmlFor="contactNumber_pending">Contact Number :</label>
+                  <label htmlFor="contactNumber">Contact Number :</label>
                   <input
                     required
                     type="text"
@@ -161,12 +198,12 @@ export default function Register() {
                     id="contactNumber_pending"
                     className="form-control"
                     placeholder="Contact Number"
-                    value={pendingScholar.contactNumber_pending}
+                    value={contactNumber_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="relationshipWithEmergencyContact_pending">Emergecy Contact Number:  :</label>
+                  <label htmlFor="relationshipWithEmergencyContact">Emergecy Contact Number:  :</label>
                   <input
                     required
                     type="text"
@@ -174,12 +211,12 @@ export default function Register() {
                     id="relationshipWithEmergencyContact_pending"
                     className="form-control"
                     placeholder="Emergecy Contact Number"
-                    value={pendingScholar.relationshipWithEmergencyContact_pending}
+                    value={relationshipWithEmergencyContact_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="emailAddress_pending">Email Address :</label>
+                  <label htmlFor="emailAddress">Email Address :</label>
                   <input
                     required
                     type="email"
@@ -187,7 +224,7 @@ export default function Register() {
                     id="emailAddress_pending"
                     className="form-control"
                     placeholder="Email"
-                    value={pendingScholar.emailAddress_pending}
+                    value={emailAddress_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
@@ -200,7 +237,7 @@ export default function Register() {
             <div className="__education_container">
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="school_pending">School :</label>
+                  <label htmlFor="school">School :</label>
                   <input
                     required
                     type="text"
@@ -208,12 +245,12 @@ export default function Register() {
                     id="school_pending"
                     className="form-control"
                     placeholder="School"
-                    value={pendingScholar.school_pending}
+                    value={school_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="course_pending">Course :</label>
+                  <label htmlFor="course">Course :</label>
                   <input
                     required
                     type="text"
@@ -221,14 +258,14 @@ export default function Register() {
                     id="course_pending"
                     className="form-control"
                     placeholder="Course"
-                    value={pendingScholar.course_pending}
+                    value={course_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
               </div>
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="yearLevel_pending">Year Level :</label>
+                  <label htmlFor="yearLevel">Year Level :</label>
                   <input
                     required
                     type="text"
@@ -236,12 +273,12 @@ export default function Register() {
                     id="yearLevel_pending"
                     className="form-control"
                     placeholder="Year Level"
-                    value={pendingScholar.yearLevel_pending}
+                    value={yearLevel_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="gwa_pending">GWA :</label>
+                  <label htmlFor="gwa">GWA :</label>
                   <input
                     required
                     type="text"
@@ -249,7 +286,7 @@ export default function Register() {
                     id="gwa_pending"
                     className="form-control"
                     placeholder="General Weighted Average"
-                    value={pendingScholar.gwa_pending}
+                    value={gwa_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
@@ -262,7 +299,7 @@ export default function Register() {
             <div className="__family_container">
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="nameOfFather_pending">Father's Name :</label>
+                  <label htmlFor="nameOfFather">Father's Name :</label>
                   <input
                     required
                     type="text"
@@ -270,12 +307,12 @@ export default function Register() {
                     id="nameOfFather_pending"
                     className="form-control"
                     placeholder="Father's Name"
-                    value={pendingScholar.nameOfFather_pending}
+                    value={nameOfFather_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="nameOfMother_pending">Mother's Name :</label>
+                  <label htmlFor="nameOfMother">Mother's Name :</label>
                   <input
                     required
                     type="text"
@@ -283,12 +320,12 @@ export default function Register() {
                     id="nameOfMother_pending"
                     className="form-control"
                     placeholder="Mother's Name"
-                    value={pendingScholar.nameOfMother_pending}
+                    value={nameOfMother_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="numberOfSiblings_pending" className="__hm_label">Number of Household Members :</label>
+                  <label htmlFor="numberOfSiblings" className="__hm_label">Number of Household Members :</label>
                   <input
                     required
                     type="number"
@@ -297,14 +334,14 @@ export default function Register() {
                     className="form-control __hm_input"
                     min="0"
                     placeholder="Number of Household Members"
-                    value={pendingScholar.numberOfSiblings_pending}
+                    value={numberOfSiblings_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
               </div>
               <div className="__input-field">
                 <div className="form-group">
-                  <label htmlFor="occupationOfFather_pending">Father's Occupation :</label>
+                  <label htmlFor="occupationOfFather">Father's Occupation :</label>
                   <input
                     required
                     type="text"
@@ -312,12 +349,12 @@ export default function Register() {
                     id="occupationOfFather_pending"
                     className="form-control"
                     placeholder="Father's Occupation"
-                    value={pendingScholar.occupationOfFather_pending}
+                    value={occupationOfFather_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="occupationOfMother_pending">Mother's Occupation :</label>
+                  <label htmlFor="occupationOfMother">Mother's Occupation :</label>
                   <input
                     required
                     type="text"
@@ -325,14 +362,14 @@ export default function Register() {
                     id="occupationOfMother_pending"
                     className="form-control"
                     placeholder="Mother's Occupation"
-                    value={pendingScholar.occupationOfMother_pending}
+                    value={occupationOfMother_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
               </div>
               <div className="__input-field item-3">
                 <div className="form-group">
-                  <label htmlFor="numberOfSiblingsStudying_pending">Number of Household Members that are Studying :</label>
+                  <label htmlFor="numberOfSiblingsStudying">Number of Household Members that are Studying :</label>
                   <input
                     required
                     type="number"
@@ -340,12 +377,12 @@ export default function Register() {
                     id="numberOfSiblingsStudying_pending"
                     className="form-control"
                     min="0"
-                    value={pendingScholar.numberOfSiblingsStudying_pending}
+                    value={numberOfSiblingsStudying_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="numberOfSiblingsWorking_pending">Number of Household Members that are Working :</label>
+                  <label htmlFor="numberOfSiblingsWorking">Number of Household Members that are Working :</label>
                   <input
                     required
                     type="number"
@@ -353,12 +390,12 @@ export default function Register() {
                     id="numberOfSiblingsWorking_pending"
                     className="form-control"
                     min="0"
-                    value={pendingScholar.numberOfSiblingsWorking_pending}
+                    value={numberOfSiblingsWorking_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="annualHouseholdIncome_pending">Annual Household Income (Net) :</label>
+                  <label htmlFor="annualHouseholdIncome">Annual Household Income (Net) :</label>
                   <input
                     required
                     type="number"
@@ -367,7 +404,7 @@ export default function Register() {
                     className="form-control"
                     min="0"
                     placeholder="Annual Income"
-                    value={pendingScholar.annualHouseholdIncome_pending}
+                    value={annualHouseholdIncome_pending}
                     onChange={(e) => onInputChange(e)}
                   />
                 </div>
@@ -376,8 +413,8 @@ export default function Register() {
           </div>
           <hr/>
           <div className="__button_field">
-            <button type="submit" className="btn btn-success register">Register</button>
-            <Link type="button" className="btn btn-danger mx-2 cancel" to="/">Cancel</Link>
+            <button type="submit" className="btn btn-success register">Save</button>
+            <Link type="button" className="btn btn-danger mx-2 cancel" to="/managePending">Cancel</Link>
           </div>
         </form>
       </div>

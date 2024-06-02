@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom';
 
 export default function Programs() {
 
@@ -33,7 +34,8 @@ export default function Programs() {
             <p className="lead">{programs.programDescription}</p>
             <p>Eligibility: {programs.programEligibility}</p>
             <p>Deadline of Application: {programs.programDeadline}</p>
-            <button className="btn btn-success mx-2">Apply!</button>
+            <button className="btn btn-primary mx-2">Details</button>
+            <Link to="/register" className="btn btn-success mx-2">Apply!</Link>
           </div>
         </div>
       ))}
